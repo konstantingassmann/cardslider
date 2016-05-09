@@ -5,7 +5,7 @@
   "main": "dist/js/jquery.cardslider.min.js",
   "repository": {
     "type": "git",
-    "url": "xx"
+    "url": "git+https://github.com/konstantingassmann/cardslider.git"
   },
   "keywords": [
     "card",
