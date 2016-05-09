@@ -1,0 +1,25 @@
+{
+  "name": "cardslider",
+  "version": "1.0.0",
+  "authors": [
+    "Konstantin Gassmann konstantin.gassmann@gmail.com"
+  ],
+  "description": "A simple and lightweight jQuery card slider",
+  "main": "src/js/jquery.cardslider.js",
+  "keywords": [
+    "slider",
+    "jquery",
+    "card",
+    "cards",
+    "carousel"
+  ],
+  "license": "WTFPL",
+  "homepage": "cardslider.konstantingassmann.de",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
