@@ -5,195 +5,195 @@
 	height: 100%;
 	position: relative;
 	overflow: hidden;
-}
 
-.cardslider-cards,
-.cardslider-dots-nav {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-	-webkit-margin-before: 0;
-    -webkit-margin-after: 0;
-    -webkit-margin-start: 0;
-    -webkit-margin-end: 0;
-    -webkit-padding-start: 0;
-}
 
-.cardslider-cards {
-    position: relative;
-    width: 50%;
-	height: 50%;
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	@include transform(translate(-50%, -50%));
-}
-
-.cardslider-dots-nav {
-	position: absolute;
-	bottom: 20px;
-	left: 50%;
-	@include transform(translateX(-50%));
-}
-
-.cardslider-dots-nav li {
-	display: inline-block;
-	margin-right: 8px;
-}
-
-.cardslider-dots-nav li a {
-	position: relative;
-	border-radius: 50%;
-	border: 2px solid white;
-	width: 10px;
-	height: 10px;
-	display: block;
-}
-
-.cardslider-dots-nav li a::before {
-	content: ' ';
-	position: absolute;
-	display: block;
-	background: white;
-	width: 6px;
-	height: 6px;
-	border-radius: 50%;
-	left: 50%;
-	top: 50%;
-	@include transition(all .5s);
-	@include transform(translate(-50%, -50%) scale(0));
-}
-
-.cardslider-dots-nav li.active a::before {
-	@include transform(translate(-50%, -50%) scale(1));
-}
-
-.cardslider-card {
-	background: rgb(215, 215, 215);
-	display: block;
-	border-radius: 10px;
-	width: 100%;
-    height: 100%;
-	position: absolute;
-	@include transition(all .5s ease-out);
-	
-	&.out {
-		opacity: 0;
+	&__cards,
+	&__dots-nav {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		-webkit-margin-before: 0;
+	    -webkit-margin-after: 0;
+	    -webkit-margin-start: 0;
+	    -webkit-margin-end: 0;
+	    -webkit-padding-start: 0;
 	}
-}
 
-.card-0 {
-	background: rgb(255, 255, 255);
-}
-.card-1 {
-	background: rgb(245, 245, 245);
-}
-.card-2 {
-	background: rgb(235, 235, 235);
-}
-.card-3 {
-	background: rgb(225, 225, 225);
-}
+	&__cards {
+	    position: relative;
+	    width: 50%;
+		height: 50%;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		@include transform(translate(-50%, -50%));
+	}
 
-.cardslider{
-	
-	&.direction-up {
-		.cardslider-card {
+	&__dots-nav {
+		position: absolute;
+		bottom: 20px;
+		left: 50%;
+		@include transform(translateX(-50%));
+	}
+
+	&__dot {
+		display: inline-block;
+		margin-right: 8px;
+	}
+
+	&__dot a {
+		position: relative;
+		border-radius: 50%;
+		border: 2px solid white;
+		width: 10px;
+		height: 10px;
+		display: block;
+	}
+
+	&__dot a::before {
+		content: ' ';
+		position: absolute;
+		display: block;
+		background: white;
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		left: 50%;
+		top: 50%;
+		@include transition(all .5s);
+		@include transform(translate(-50%, -50%) scale(0));
+	}
+
+	&__dot--active a::before {
+		@include transform(translate(-50%, -50%) scale(1));
+	}
+
+	&__card {
+		background: rgb(215, 215, 215);
+		display: block;
+		border-radius: 10px;
+		width: 100%;
+	    height: 100%;
+		position: absolute;
+		@include transition(all .5s ease-out);
+
+		&.out {
+			opacity: 0;
+		}
+	}
+
+	&__card--0 {
+		background: rgb(255, 255, 255);
+	}
+
+	&__card--1 {
+		background: rgb(245, 245, 245);
+	}
+
+	&__card--2 {
+		background: rgb(235, 235, 235);
+	}
+
+	&__card--3 {
+		background: rgb(225, 225, 225);
+	}
+
+	&--direction-up {
+		.cardslider__card {
 			@include transform(scale(0.8) translateY(17.25%)); //-80px
 		}
-		.card-0 {
+		.cardslider__card--0 {
 			transform: none;
 		}
-		.card-1 {
+		.cardslider__card--1 {
 			transform: scale(0.95) translateY(4.31%); //-20px
 		}
-		.card-2 {
+		.cardslider__card--2 {
 			transform: scale(0.9) translateY(8.61%); //-40px
 		}
-		.card-3 {
+		.cardslider__card--3 {
 			transform: scale(0.85) translateY(12.91%); //-60px
 		}
-		
-		.out {
+
+		.cardslider__card--out {
 			transform: translateY(-1000px);
 		}
 	}
-	
-	&.direction-down {
-		.cardslider-card {
+
+	&--direction-down {
+		.cardslider__card {
 			@include transform(scale(0.8) translateY(-17.25%)); //-80px
 		}
-		.card-0 {
+		.cardslider__card--0 {
 			transform: none;
 		}
-		.card-1 {
+		.cardslider__card--1 {
 			transform: scale(0.95) translateY(-4.31%); //-20px
 		}
-		.card-2 {
+		.cardslider__card--2 {
 			transform: scale(0.9) translateY(-8.61%); //-40px
 		}
-		.card-3 {
+		.cardslider__card--3 {
 			transform: scale(0.85) translateY(-12.91%); //-60px
 		}
-		
-		.out {
+
+		.cardslider__card--out {
 			transform: translateY(1000px);
 		}
 	}
-	
-	&.direction-right {
-		.cardslider-card {
+
+	&--direction-right {
+		.cardslider__card {
 			@include transform(scale(0.8) translateX(-17.25%)); //-80px
 		}
-		.card-0 {
+		.cardslider__card--0 {
 			transform: none;
 		}
-		.card-1 {
+		.cardslider__card--1 {
 			transform: scale(0.95) translateX(-4.31%); //-20px
 		}
-		.card-2 {
+		.cardslider__card--2 {
 			transform: scale(0.9) translateX(-8.61%); //-40px
 		}
-		.card-3 {
+		.cardslider__card--3 {
 			transform: scale(0.85) translateX(-12.91%); //-60px
 		}
-		
-		.out {
+
+		.cardslider__card--out {
 			transform: translateX(1000px);
 		}
 	}
-	
-	&.direction-left {
-		.cardslider-card {
+
+	&--direction-left {
+		.cardslider__card {
 			@include transform(scale(0.8) translateX(17.25%)); //-80px
 		}
-		.card-0 {
+		.cardslider__card--0 {
 			transform: none;
 		}
-		.card-1 {
+		.cardslider__card--1 {
 			transform: scale(0.95) translateX(4.31%); //-20px
 		}
-		.card-2 {
+		.cardslider__card--2 {
 			transform: scale(0.9) translateX(8.61%); //-40px
 		}
-		.card-3 {
+		.cardslider__card--3 {
 			transform: scale(0.85) translateX(12.91%); //-60px
 		}
-		
-		.out {
+
+		.cardslider__card--out {
 			transform: translateX(-1000px);
 		}
 	}
-	
-}
 
-.cardslider-direction-nav {
-	position: absolute;
-	right: 20px;
-	bottom: 20px;
-	
-	.cardslider-nav-next,
-	.cardslider-nav-prev {
+	&__direction-nav {
+		position: absolute;
+		right: 20px;
+		bottom: 20px;
+	}
+
+	&__nav-next,
+	&__nav-prev {
 		display: block;
 		background: none;
 		border: none;
@@ -208,18 +208,18 @@
 		background-position: center center;
 		background-size: 20px 20px;
 		padding: 0;
-		
+
 		&:active {
 			@include transform(scale(.8));
 		}
 	}
-	
-	.cardslider-nav-next {
+
+	&__nav-next {
 		margin-bottom: 10px;
 		background-image: url('../img/arrow-up.svg');
 	}
-	
-	.cardslider-nav-prev {
+
+	&__nav-prev {
 		background-image: url('../img/arrow-down.svg');
 	}
 }
