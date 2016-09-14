@@ -1,5 +1,3 @@
-@import "_includes";
-
 .cardslider {
 	width: 100%;
 	height: 100%;
@@ -12,11 +10,6 @@
 		margin: 0;
 		padding: 0;
 		list-style: none;
-		-webkit-margin-before: 0;
-	    -webkit-margin-after: 0;
-	    -webkit-margin-start: 0;
-	    -webkit-margin-end: 0;
-	    -webkit-padding-start: 0;
 	}
 
 	&__cards {
@@ -26,14 +19,14 @@
 		position: absolute;
 		left: 50%;
 		top: 50%;
-		@include transform(translate(-50%, -50%));
+		transform: translate(-50%, -50%);
 	}
 
 	&__dots-nav {
 		position: absolute;
 		bottom: 20px;
 		left: 50%;
-		@include transform(translateX(-50%));
+		transform: translateX(-50%);
 	}
 
 	&__dot {
@@ -60,12 +53,12 @@
 		border-radius: 50%;
 		left: 50%;
 		top: 50%;
-		@include transition(all .5s);
-		@include transform(translate(-50%, -50%) scale(0));
+		transition: all .5s;
+		transform: translate(-50%, -50%) scale(0);
 	}
 
 	&__dot--active a::before {
-		@include transform(translate(-50%, -50%) scale(1));
+		transform: translate(-50%, -50%) scale(1);
 	}
 
 	&__card {
@@ -75,7 +68,7 @@
 		width: 100%;
 	    height: 100%;
 		position: absolute;
-		@include transition(all .5s ease-out);
+		transition: all .5s ease-out;
 
 		&.out {
 			opacity: 0;
@@ -100,7 +93,7 @@
 
 	&--direction-up {
 		.cardslider__card {
-			@include transform(scale(0.8) translateY(17.25%)); //-80px
+			transform: scale(0.8) translateY(17.25%) //-80px
 		}
 		.cardslider__card--0 {
 			transform: none;
@@ -116,13 +109,13 @@
 		}
 
 		.cardslider__card--out {
-			transform: translateY(-1000px);
+			transform: translateY(-150%);
 		}
 	}
 
 	&--direction-down {
 		.cardslider__card {
-			@include transform(scale(0.8) translateY(-17.25%)); //-80px
+			transform: scale(0.8) translateY(-17.25%); //-80px
 		}
 		.cardslider__card--0 {
 			transform: none;
@@ -138,13 +131,13 @@
 		}
 
 		.cardslider__card--out {
-			transform: translateY(1000px);
+			transform: translateY(150%);
 		}
 	}
 
 	&--direction-right {
 		.cardslider__card {
-			@include transform(scale(0.8) translateX(-17.25%)); //-80px
+			transform: scale(0.8) translateX(-17.25%); //-80px
 		}
 		.cardslider__card--0 {
 			transform: none;
@@ -160,13 +153,13 @@
 		}
 
 		.cardslider__card--out {
-			transform: translateX(1000px);
+			transform: translateX(150%);
 		}
 	}
 
 	&--direction-left {
 		.cardslider__card {
-			@include transform(scale(0.8) translateX(17.25%)); //-80px
+			transform: scale(0.8) translateX(17.25%); //-80px
 		}
 		.cardslider__card--0 {
 			transform: none;
@@ -182,7 +175,7 @@
 		}
 
 		.cardslider__card--out {
-			transform: translateX(-1000px);
+			transform: translateX(-150%);
 		}
 	}
 
@@ -201,7 +194,7 @@
 		height: 40px;
 		text-indent: -9999px;
 		outline: none;
-		@include transition(all .3s);
+		transition: all .3s;
 		border: 2px solid white;
 		border-radius: 50%;
 		background-repeat: no-repeat;
@@ -210,7 +203,7 @@
 		padding: 0;
 
 		&:active {
-			@include transform(scale(.8));
+			transform: scale(.8);
 		}
 	}
 

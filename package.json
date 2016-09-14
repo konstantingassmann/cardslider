@@ -1,6 +1,6 @@
 {
   "name": "cardslider",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A simple and lightweight jQuery card slider",
   "main": "dist/js/jquery.cardslider.min.js",
   "repository": {
@@ -15,5 +15,9 @@
     "carousel"
   ],
   "author": "Konstantin Gassmann konstantin.gassmann@gmail.com",
-  "license": "WTFPL"
+  "license": "WTFPL",
+  "dependencies": {
+    "jquery.event.move": "^1.3.6",
+    "jquery.event.swipe": "^0.5.4"
+  }
 }
