@@ -1,6 +1,6 @@
 {
   "name": "cardslider",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "A simple and lightweight jQuery card slider",
   "main": "dist/js/jquery.cardslider.min.js",
   "repository": {
