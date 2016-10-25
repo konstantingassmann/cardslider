@@ -8,7 +8,7 @@ A simple and lightweight cardslider plugin. Take a look at the demo [here](http:
 
 1. Include the basic html markup
 ```html
-<div class="cardslider">
+<div class="my-cardslider">
 	<ul>
 		<li>card 1</li>
 		<li>card 2</li>
@@ -28,9 +28,17 @@ A simple and lightweight cardslider plugin. Take a look at the demo [here](http:
 ```html
 <script>
 	$(function() {
-		$('.cardslider').cardslider();
+		$('.my-cardslider').cardslider();
 	});
 </script>
+```
+
+4. cardslider needs a container which sizes the slider. The cards default to 80% width & height of this container. Modify it by setting width and height of the `.cardslider__cards` class.
+```
+.cardslider__cards {
+    width: 50%;
+    height: 50%;
+}
 ```
 
 Swipe support is added through [jquery.event.swipe](https://github.com/stephband/jquery.event.swipe). Just include their scripts before you include cardslider and you're good to go.
@@ -67,6 +75,11 @@ Enable or disable swiping on the cards
 Type: ```bool``` Default: ```false```
 
 Enable or disable the dot nav
+
+### loop
+Type: ```bool``` Default: ```false```
+
+Enable or disable looping of the cards
 
 ## callback functions
 
