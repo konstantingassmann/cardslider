@@ -45,8 +45,6 @@ cardslider needs a container which sizes the slider. The cards default to 80% wi
 }
 ```
 
-Swipe support is added through [jquery.event.swipe](https://github.com/stephband/jquery.event.swipe). Just include their scripts before you include cardslider and you're good to go.
-
 ## options
 
 ### keys

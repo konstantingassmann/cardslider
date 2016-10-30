@@ -15,9 +15,5 @@
     "carousel"
   ],
   "author": "Konstantin Gassmann konstantin.gassmann@gmail.com",
-  "license": "WTFPL",
-  "dependencies": {
-    "jquery.event.move": "^1.3.6",
-    "jquery.event.swipe": "^0.5.4"
-  }
+  "license": "WTFPL"
 }
