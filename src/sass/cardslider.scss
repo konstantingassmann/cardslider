@@ -78,31 +78,34 @@
 		margin-right: 8px;
 	}
 
-	&__dot a {
+	&__dot-btn {
 		position: relative;
 		border-radius: 50%;
 		border: 2px solid white;
 		width: 10px;
 		height: 10px;
 		display: block;
+		appearance: none;
+		background: none;
+		padding: 0;
+
+		&::before {
+			content: ' ';
+			position: absolute;
+			display: block;
+			background: white;
+			width: 6px;
+			height: 6px;
+			border-radius: 50%;
+			left: 50%;
+			top: 50%;
+			transition: all .5s;
+			transform: translate(-50%, -50%) scale(0);
+		}
 	}
 
-	&__dot a::before {
-		content: ' ';
-		position: absolute;
-		display: block;
-		background: white;
-		width: 6px;
-		height: 6px;
-		border-radius: 50%;
-		left: 50%;
-		top: 50%;
-		transition: all .5s;
-		transform: translate(-50%, -50%) scale(0);
-	}
-
-	&__dot--active a::before {
-		transform: translate(-50%, -50%) scale(1);
+	&__dot--active .cardslider__dot-btn::before {
+		transform: translate(-50%, -50%) scale(1.1);
 	}
 
 	&__card {
@@ -112,10 +115,10 @@
 		width: 100%;
 	    height: 100%;
 		position: absolute;
-		transition: background .5s ease-out;
+		transition: background 0.5s ease-out;
 
 		&--transitions {
-			transition: background .5s ease-out, transform .5s ease-out;
+			transition: background 0.5s ease-out, transform 0.5s ease-out;
 		}
 
 		&--index-0 {
@@ -221,122 +224,85 @@
 	}
 }
 
-@keyframes sortback-down {
-  0% {
-    transform: translate3d(0, 0, 4px);
-  }
-  74% {
-    transform: translate3d(0, 150%, 4px);
-  }
-  75% {
-    transform: translate3d(0, 150%, 0);
-  }
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
+@mixin anim() {
+
+	$val: 150%;
+	$directions: ('down', 'up', 'left', 'right');
+	$steps: (0, 50, 60, 100);
+
+	@each $dir in $directions {
+		$x: 0;
+		$y: 0;
+
+		@if $dir == 'down' or $dir == 'up' {
+			$y: $val;
+		}
+		@else {
+			$x: $val;
+		}
+
+		@if $dir == 'up' or $dir == 'left' {
+			$x: $x * -1;
+			$y: $y * -1;
+		}
+
+		@keyframes sortback-#{$dir} {
+			@each $step in $steps {
+				$z: 0;
+				$scale: 0;
+
+				@if $step > 50 {
+					$z: 0;
+					$scale: 0.8;
+				}
+				@else {
+					$z: 4px;
+					$scale: 1;
+				}
+
+				$xval: 0;
+				$yval: 0;
+
+				@if $step > 0 and $step < 100 {
+					$xval: $x;
+					$yval: $y;
+				}
+
+				#{$step}% {
+					transform: translate3d($xval, $yval, $z) scale($scale);
+				}
+			}
+		}
+
+		@keyframes sortfront-#{$dir} {
+
+			@each $step in $steps {
+				$z: 0;
+				$scale: 0;
+
+				@if $step < 60 {
+					$z: 0;
+					$scale: 0.8;
+				}
+				@else {
+					$z: 4px;
+					$scale: 1;
+				}
+
+				$xval: 0;
+				$yval: 0;
+
+				@if $step > 0 and $step < 100 {
+					$xval: $x;
+					$yval: $y;
+				}
+
+				#{$step}% {
+					transform: translate3d($xval, $yval, $z) scale($scale);
+				}
+			}
+		}
+	}
 }
 
-@keyframes sortfront-down {
-  0% {
-    transform: translateY(0) translateZ(0);
-  }
-  74% {
-    transform: translateY(150%) translateZ(0);
-  }
-  75% {
-    transform: translateY(150%) translateZ(4px);
-  }
-  100% {
-    transform: translateY(0) translateZ(4px);
-  }
-}
-
-@keyframes sortback-up {
-  0% {
-    transform: translate3d(0, 0, 4px);
-  }
-  74% {
-    transform: translate3d(0, -150%, 4px);
-  }
-  75% {
-    transform: translate3d(0, -150%, 0);
-  }
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes sortfront-up {
-  0% {
-    transform: translateY(0) translateZ(0);
-  }
-  74% {
-    transform: translateY(-150%) translateZ(0);
-  }
-  75% {
-    transform: translateY(-150%) translateZ(4px);
-  }
-  100% {
-    transform: translateY(0) translateZ(4px);
-  }
-}
-
-@keyframes sortback-left {
-  0% {
-    transform: translate3d(0, 0, 4px);
-  }
-  74% {
-    transform: translate3d(-150%, 0, 4px);
-  }
-  75% {
-    transform: translate3d(-150%, 0, 0);
-  }
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes sortfront-left {
-  0% {
-    transform: translateY(0) translateZ(0);
-  }
-  74% {
-    transform: translateX(-150%) translateZ(0);
-  }
-  75% {
-    transform: translateX(-150%) translateZ(4px);
-  }
-  100% {
-    transform: translateY(0) translateZ(4px);
-  }
-}
-
-@keyframes sortback-right {
-  0% {
-    transform: translate3d(0, 0, 4px);
-  }
-  74% {
-    transform: translate3d(150%, 0, 4px);
-  }
-  75% {
-    transform: translate3d(150%, 0, 0);
-  }
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes sortfront-right {
-  0% {
-    transform: translateY(0) translateZ(0);
-  }
-  74% {
-    transform: translateX(150%) translateZ(0);
-  }
-  75% {
-    transform: translateX(150%) translateZ(4px);
-  }
-  100% {
-    transform: translateY(0) translateZ(4px);
-  }
-}
+@include anim();

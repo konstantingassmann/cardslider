@@ -1,8 +1,8 @@
-[![cardslider Logo](logo.png "cardslider Logo")](http://cardslider.konstantingassmann.de)
+[![cardslider Logo](logo.png "cardslider Logo")](https://cardslider.konstantingassmann.de)
 
 # jQuery cardslider
 
-A simple and lightweight cardslider plugin. Take a look at the demo [here](http://cardslider.konstantingassmann.de).
+A simple and lightweight cardslider plugin. Take a look at the demo [here](https://cardslider.konstantingassmann.de).
 
 ## setup
 

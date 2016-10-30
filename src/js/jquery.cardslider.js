@@ -34,10 +34,14 @@
 		this._directionClass = 'cardslider--direction-'+this.settings.direction;
 		this._animationClassBack = 'cardslider--sortback-'+this.settings.direction;
 		this._animationClassFront = 'cardslider--sortfront-'+this.settings.direction;
-		this._$dotnav = null;
-		this._$directionnav = null;
+		this._dotnav = null;
+		this._directionnav = null;
 		this._buttonNext = null;
 		this._buttonPrev = null;
+		this._xDown = null;
+		this._yDown = null;
+		this._swipeThreshold = 100;
+
 		this.init();
 	}
 
@@ -54,53 +58,45 @@
 				this.initDots();
 			}
 
-			if($.event.special.swipe && this.settings.swipe) {
+			if(this.settings.swipe) {
 				this.initSwipe();
 			}
 
 			if(this.settings.keys !== false) {
-				$(window).on('keydown.cardslider', this.keyNav.bind(this));
+				window.addEventListener('keydown', this.keyNav.bind(this));
 			}
 
 			this.changeCardTo(0);
 		},
 		initCards: function() {
 
-			var $element = $(this.element);
-			$element.addClass('cardslider '+this._directionClass);
-			var $list = $element.find('> ul');
-			$list.addClass('cardslider__cards');
+			this.element.className = this.element.className + ' cardslider ' + this._directionClass;
 
-			var rawcards = $list.find('li');
+			var list = this.element.querySelector('ul');
+			if(!list) return false;
 
-			var scale = 1;
-			var y = 0;
-			var brightness = 255;
+			list.classList.add('cardslider__cards');
 
-			for(var i = 0; i < rawcards.length; i++) {
+      var rawcards = list.querySelectorAll('li');
+      for(var i = 0; i < rawcards.length; i++) {
+        var rawcard = rawcards[i];
 
-				var card = {
-					$elem: $(rawcards[i]),
+        var card = {
+					elem: rawcard,
 					active: i === 0? true : false,
 					index: i,
 					cardClass: 'cardslider__card--index-' + i
 				};
 
-        card.$elem.addClass('cardslider__card cardslider__card--transitions '+card.cardClass);
-
-        card.$elem.css({
-          'z-index': rawcards.length - i
-        });
+        card.elem.className = card.elem.className + ' cardslider__card cardslider__card--transitions ' + card.cardClass;
+        card.elem.style.zIndex = rawcards.length - i;
 
 				this._cards.push(card);
-
-				scale = scale - 0.05;
-				y-=20;
-				brightness-=10;
-			}
+      }
 		},
 		initNav: function() {
-			this._$directionnav = $('<div class="cardslider__direction-nav" />');
+			this._directionnav = document.createElement('div');
+			this._directionnav.className = 'cardslider__direction-nav';
 
 			this._buttonNext = document.createElement('button');
 			this._buttonNext.title = 'next';
@@ -114,34 +110,106 @@
 			this._buttonPrev.innerHTML = 'Prev';
       this._buttonPrev.addEventListener('click', this.prevCard.bind(this));
 
-			this._$directionnav.append(this._buttonNext);
-			this._$directionnav.append(this._buttonPrev);
-			$(this.element).append(this._$directionnav);
+			this._directionnav.appendChild(this._buttonNext);
+			this._directionnav.appendChild(this._buttonPrev);
+			this.element.appendChild(this._directionnav);
 		},
 		initDots: function() {
 			var cardslider = this;
-			this._$dotnav = $('<ul class="cardslider__dots-nav" />');
+			this._dotnav = document.createElement('ul');
+			this._dotnav.className = 'cardslider__dots-nav';
 
-      var cardAmt = this._cards.length;
-      var startIndex = 0;
+			for(var i = 0; i < this._cards.length; i++) {
+				var dot = document.createElement('button');
+        dot.className = 'cardslider__dot-btn';
+				dot.setAttribute('data-slide', i);
+				dot.setAttribute('type', 'button');
 
-			for(var i = startIndex; i < cardAmt; i++) {
-				var $link = $('<a href="#" />');
-				$link.attr('data-slide', i);
-				$link.on('click.cardslider', function(e) {
-					e.preventDefault();
-					cardslider.changeCardTo($(this).data('slide'));
+				dot.addEventListener('click', function(e) {
+					cardslider.changeCardTo(parseInt(e.target.getAttribute('data-slide')));
 				});
-				var $listItem = $('<li class="cardslider__dot" />');
-				this._$dotnav.append($listItem.append($link));
+
+				var listItem = document.createElement('li');
+				listItem.className = 'cardslider__dot';
+        listItem.appendChild(dot)
+				this._dotnav.appendChild(listItem);
 			}
 
-			$(this.element).append(this._$dotnav);
+			this.element.appendChild(this._dotnav);
 		},
 		initSwipe: function() {
-			$(this.element).find('.cardslider__cards').on('swipeup.cardslider', this.prevCard.bind(this));
+      this.element.addEventListener('touchstart', this.handleTouchStart.bind(this));
+			this.element.addEventListener('touchmove', this.handleTouchEnd.bind(this));
+		},
+		handleTouchStart: function(e) {
+      this._xDown = e.touches[0].clientX;
+      this._yDown = e.touches[0].clientY;
+		},
+		handleTouchEnd: function(e) {
+  		e.preventDefault();
 
-			$(this.element).find('.cardslider__cards').on('swipedown.cardslider', this.nextCard.bind(this));
+      if ( ! this._xDown || ! this._yDown ) {
+        return;
+      }
+
+      var next = false;
+      var prev = false;
+
+      var xUp = e.touches[0].clientX;
+      var yUp = e.touches[0].clientY;
+
+      var xDiff = this._xDown - xUp;
+      var yDiff = this._yDown - yUp;
+
+      if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {
+
+        if(Math.abs(xDiff) < this._swipeThreshold) {return;}
+
+        if ( xDiff > 0 ) { // left swipe
+          if(this.settings.direction == 'left') {
+            next = true;
+          }
+          else if(this.settings.direction == 'right') {
+            prev = true;
+          }
+        } else { //right swipe
+          if(this.settings.direction == 'right') {
+            next = true;
+          }
+          else if(this.settings.direction == 'left') {
+            prev = true;
+          }
+        }
+      } else {
+
+        if(Math.abs(yDiff) < this._swipeThreshold) {return;}
+
+        if ( yDiff > 0 ) { //up swipe
+          if(this.settings.direction == 'up') {
+            next = true;
+          }
+          else if(this.settings.direction == 'down') {
+            prev = true;
+          }
+        } else { //down swipe
+          if(this.settings.direction == 'down') {
+            next = true;
+          }
+          else if(this.settings.direction == 'up') {
+            prev = true;
+          }
+        }
+      }
+
+      if(next) {
+        this.nextCard();
+      }
+      else if(prev) {
+        this.prevCard();
+      }
+
+      this._xDown = null;
+      this._yDown = null;
 		},
 		keyNav: function(e) {
 			if(e.keyCode == this.settings.keys.next) {
@@ -192,10 +260,12 @@
 
       // remove left over animation classes
       if(this.settings.loop) {
-        for(var i = 0; i < this._cards.length; i++) {
-  				this._cards[i].$elem.removeClass(this._animationClassFront + ' ' + this._animationClassBack);
-  				this._cards[i].$elem.addClass('cardslider__card--transitions');
-  			}
+        var that = this;
+        this._cards.forEach(function(card) {
+          card.elem.classList.remove(that._animationClassFront);
+  				card.elem.classList.remove(that._animationClassBack);
+  				card.elem.classList.add('cardslider__card--transitions');
+        });
 			}
 
 			// fire before callback
@@ -206,33 +276,32 @@
 			if(oldCard && (index > oldCard.index || (index < oldCard.index && resetZ)) || !oldCard && index > 0) {
 				for(var i = 0; i < indexAbs; i++) {
 
-  				this._cards[i].$elem.attr('aria-hidden', true);
+  				this._cards[i].elem.setAttribute('aria-hidden', true);
 
 					if(!this.settings.loop) {
-  				  this._cards[i].$elem.addClass('cardslider__card--out');
+  				  this._cards[i].elem.classList.add('cardslider__card--out');
   				}
 				}
 
 				if(this.settings.loop && oldCard != null) {
-          oldCard.$elem.removeClass('cardslider__card--transitions');
-          oldCard.$elem.addClass(this._animationClassBack);
+          oldCard.elem.classList.remove('cardslider__card--transitions');
+          oldCard.elem.classList.add(this._animationClassBack);
         }
 			}
 			else if(oldCard) {
         if(this.settings.loop && oldCard) {
-          this._cards[indexAbs].$elem.removeClass('cardslider__card--transitions');
-  			  this._cards[indexAbs].$elem.addClass(this._animationClassFront);
+          this._cards[indexAbs].elem.classList.remove('cardslider__card--transitions');
+  			  this._cards[indexAbs].elem.classList.add(this._animationClassFront);
   			}
-
-				for(var i = this._cards.length-1; i > indexAbs; i--) {
-					this._cards[i].$elem.addClass('cardslider__card--out');
-					this._cards[i].$elem.attr('aria-hidden', true);
-				}
+        this._cards.forEach(function(card) {
+          card.elem.classList.add('cardslider__card--out');
+					card.elem.setAttribute('aria-hidden', true);
+        });
 			}
 
       // make the front most card to the active one
 			this._activeCard = newCard;
-			this._activeCard.$elem.attr('aria-hidden', false);
+			this._activeCard.elem.setAttribute('aria-hidden', false);
 
       // reorder all index classes to push the cards to their new position
 			this.reorderIndices(indexAbs);
@@ -250,50 +319,64 @@
 			return this;
 		},
 		changeDots: function(index) {
-      this._$dotnav.find('.cardslider__dot--active').removeClass('cardslider__dot--active');
-			this._$dotnav.find('.cardslider__dot').eq(index).addClass('cardslider__dot--active');
+      var active = this._dotnav.querySelector('.cardslider__dot--active');
+      if(active) {
+        active.classList.remove('cardslider__dot--active');
+      }
+
+      var next = this._dotnav.querySelector('.cardslider__dot:nth-child('+(index+1)+')');
+      if(next) {
+        next.classList.add('cardslider__dot--active');
+      }
 		},
 		reorderIndices: function(index) {
-			for(var i = 0; i < this._cards.length; i++) {
-
-				var card = this._cards[i];
-
+      var that = this;
+  		this._cards.forEach(function(card, i) {
 				if(i-index >= 0) {
-  				card.$elem.removeClass(function(i, css) {return(css.match(/cardslider__card--index-\d|cardslider__card--out/g) || []).join(' ');});
-					card.$elem.addClass(this._cards[i-index].cardClass);
-          if(this.settings.loop) {
-					  this.setZindex(card, this._cards.length - 1 - this._cards[i-index].index);
+  				var cardClasses = card.elem.className;
+          cardClasses = cardClasses.replace(/cardslider__card--index-\d|cardslider__card--out/g, '');
+  				card.elem.className = cardClasses.replace('  ',' ').trim();
+					card.elem.classList.add(that._cards[i-index].cardClass);
+
+          if(that.settings.loop) {
+					  that.setZindex(card, that._cards.length - 1 - that._cards[i-index].index);
 					}
 				}
-				else if(this.settings.loop) {
-  				card.$elem.removeClass(function(i, css) {return(css.match(/cardslider__card--index-\d|cardslider__card--out/g) || []).join(' ');});
-					card.$elem.addClass(this._cards[this._cards.length-(index-i)].cardClass);
-					this.setZindex(card, this._cards.length - 1 - this._cards[this._cards.length-(index-i)].index);
+				else if(that.settings.loop) {
+  				var cardClasses = card.elem.className;
+  				cardClasses = cardClasses.replace(/cardslider__card--index-\d|cardslider__card--out/g, '');
+  				card.elem.className = cardClasses.replace('  ',' ').trim();
+					card.elem.classList.add(that._cards[that._cards.length-(index-i)].cardClass);
+
+					that.setZindex(card, that._cards.length - 1 - that._cards[that._cards.length-(index-i)].index);
 				}
-			}
+  		});
 		},
 		setZindex: function(elem, index) {
-  		elem.$elem.css({
-				'z-index': index
-			});
+  		elem.elem.style.zIndex = index;
 		},
 		destroy: function() {
-			var $element = $(this.element);
-			var $list = $element.find('.cardslider__cards');
-			$element.removeClass(function(i, css) {return(css.match(/card.*/g) || []).join(' ');})
-			$list.removeClass('cardslider__cards');
-			$list.find('.cardslider__card').removeClass(function(i, css) {return(css.match(/card.*/g) || []).join(' ');}).removeAttr('style').removeAttr('aria-hidden');
+			var list = this.element.querySelector('.cardslider__cards');
+			this.element.className = this.element.className.replace(this.element.className.match(/card.*/g)[0], '');
 
-			this._$dotnav.remove();
-			this._$dotnav = null;
+			list.classList.remove('cardslider__cards');
 
-			this._$directionnav.remove();
-			this._$directionnav = null;
+			this._cards.forEach(function(card) {
+  		  card.elem.className = card.elem.className.replace(card.elem.className.match(/card.*/g)[0], '');
+  			card.elem.removeAttribute('style');
+  			card.elem.removeAttribute('aria-hidden');
+			});
+
+			this._dotnav.parentElement.removeChild(this._dotnav);
+			this._dotnav = null;
+
+			this._directionnav.parentElement.removeChild(this._directionnav);
+			this._directionnav = null;
 
 			this._cards = [];
 			this._activeCard = null;
 
-			$(window).off('keydown.cardslider');
+			window.removeEventListener('keydown', this.keyNav);
 
 			this._buttonNext.removeEventListener('cardslider', this.nextCard);
 			this._buttonPrev.removeEventListener('cardslider', this.prevCard);
