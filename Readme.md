@@ -4,9 +4,13 @@
 
 A simple and lightweight cardslider plugin. Take a look at the demo [here](https://cardslider.konstantingassmann.de).
 
+Support cardslider by keeping me caffeinated ☕️
+
+[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?fid=o621on&url=https%3A%2F%2Fgithub.com%2Fkonstantingassmann%2Fcardslider&title=jQuery%20cardslider&language=javascript&tags=github&category=software)
+
 ## setup
 
-1. Include the basic html markup
+Include the basic html markup
 ```html
 <div class="my-cardslider">
 	<ul>
@@ -16,7 +20,7 @@ A simple and lightweight cardslider plugin. Take a look at the demo [here](https
 </div>
 ```
 
-2. Include the cardslider stylesheet, jQuery and the cardslider js files.
+Include the cardslider stylesheet, jQuery and the cardslider js files.
 ```html
 <link href="/cardslider.css" rel="stylesheet">
 ...
@@ -24,7 +28,7 @@ A simple and lightweight cardslider plugin. Take a look at the demo [here](https
 <script src="/path/to/jquery.cardslider.min.js"></script>
 ```
 
-3. Initialize the plugin. For more options see below
+Initialize the plugin. For more options see below
 ```html
 <script>
 	$(function() {
@@ -33,7 +37,7 @@ A simple and lightweight cardslider plugin. Take a look at the demo [here](https
 </script>
 ```
 
-4. cardslider needs a container which sizes the slider. The cards default to 80% width & height of this container. Modify it by setting width and height of the `.cardslider__cards` class.
+cardslider needs a container which sizes the slider. The cards default to 80% width & height of this container. Modify it by setting width and height of the `.cardslider__cards` class.
 ```
 .cardslider__cards {
     width: 50%;
