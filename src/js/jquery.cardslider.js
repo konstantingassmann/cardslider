@@ -367,19 +367,30 @@
   			card.elem.removeAttribute('aria-hidden');
 			});
 
-			this._dotnav.parentElement.removeChild(this._dotnav);
-			this._dotnav = null;
+      if(this._dotnav) {
+		    this._dotnav.parentElement.removeChild(this._dotnav);
+		    this._dotnav = null;
+      }
 
-			this._directionnav.parentElement.removeChild(this._directionnav);
-			this._directionnav = null;
+      if(this._directionnav) {
+			  this._directionnav.parentElement.removeChild(this._directionnav);
+			  this._directionnav = null;
+      }
 
 			this._cards = [];
 			this._activeCard = null;
 
-			window.removeEventListener('keydown', this.keyNav);
+      if(this.settings.keys !== false) {
+			  window.removeEventListener('keydown', this.keyNav);
+      }
 
-			this._buttonNext.removeEventListener('cardslider', this.nextCard);
-			this._buttonPrev.removeEventListener('cardslider', this.prevCard);
+      if(this._buttonNext) {
+			  this._buttonNext.removeEventListener('cardslider', this.nextCard);
+      }
+
+      if(this._buttonPrev) {
+			  this._buttonPrev.removeEventListener('cardslider', this.prevCard);
+      }
 
 			return this;
 		}
