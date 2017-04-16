@@ -4,10 +4,6 @@
 
 A simple and lightweight cardslider plugin. Take a look at the demo [here](https://cardslider.konstantingassmann.de).
 
-Support cardslider by keeping me caffeinated ☕️
-
-[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?fid=o621on&url=https%3A%2F%2Fgithub.com%2Fkonstantingassmann%2Fcardslider&title=jQuery%20cardslider&language=javascript&tags=github&category=software)
-
 ## setup
 
 Include the basic html markup
@@ -82,6 +78,11 @@ Enable or disable the dot nav
 Type: ```bool``` Default: ```false```
 
 Enable or disable looping of the cards
+
+### showCards
+Type: ```int``` Default: ```0```
+
+Only show the first x cards, defaults to 0 which shows all cards
 
 ## callback functions
 

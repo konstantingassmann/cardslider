@@ -20,11 +20,14 @@
 			dots: false,
 			loop: false,
 			beforeCardChange: null,
-			afterCardChange: null
+			afterCardChange: null,
+      showCards: 0
 		};
 
 	function Plugin ( element, options ) {
 		this.element = element;
+
+    options.showCards-=1;
 
 		this.settings = $.extend( {}, defaults, options );
 		this._defaults = defaults;
@@ -81,6 +84,8 @@
       for(var i = 0; i < rawcards.length; i++) {
         var rawcard = rawcards[i];
 
+        var hidden = this.settings.showCards != 0 && i > this.settings.showCards;
+
         var card = {
 					elem: rawcard,
 					active: i === 0? true : false,
@@ -88,7 +93,11 @@
 					cardClass: 'cardslider__card--index-' + i
 				};
 
-        card.elem.className = card.elem.className + ' cardslider__card cardslider__card--transitions ' + card.cardClass;
+        card.elem.className = card.elem.className
+        + ' cardslider__card cardslider__card--transitions '
+        + card.cardClass
+        + (hidden && ' cardslider__card--invisible');
+
         card.elem.style.zIndex = rawcards.length - i;
 
 				this._cards.push(card);
@@ -138,8 +147,8 @@
 			this.element.appendChild(this._dotnav);
 		},
 		initSwipe: function() {
-      this.element.addEventListener('touchstart', this.handleTouchStart.bind(this));
-			this.element.addEventListener('touchmove', this.handleTouchEnd.bind(this));
+      this.element.addEventListener('touchstart', this.handleTouchStart.bind(this), {passive:true});
+			this.element.addEventListener('touchmove', this.handleTouchEnd.bind(this), {passive:true});
 		},
 		handleTouchStart: function(e) {
       this._xDown = e.touches[0].clientX;
@@ -331,24 +340,47 @@
 		},
 		reorderIndices: function(index) {
       var that = this;
+      var cardLen = that._cards.length - 1;
   		this._cards.forEach(function(card, i) {
 				if(i-index >= 0) {
   				var cardClasses = card.elem.className;
           cardClasses = cardClasses.replace(/cardslider__card--index-\d|cardslider__card--out/g, '');
   				card.elem.className = cardClasses.replace('  ',' ').trim();
-					card.elem.classList.add(that._cards[i-index].cardClass);
+
+          var newCardClass = that._cards[i-index].cardClass;
+
+          card.elem.classList.add(newCardClass);
+
+          var parsed = parseInt(newCardClass.slice(-1));
+
+          if(parsed > that.settings.showCards) {
+            card.elem.classList.add('cardslider__card--invisible');
+          }
+          else {
+            card.elem.classList.remove('cardslider__card--invisible');
+          }
 
           if(that.settings.loop) {
-					  that.setZindex(card, that._cards.length - 1 - that._cards[i-index].index);
+					  that.setZindex(card, cardLen - that._cards[i-index].index);
 					}
 				}
 				else if(that.settings.loop) {
   				var cardClasses = card.elem.className;
   				cardClasses = cardClasses.replace(/cardslider__card--index-\d|cardslider__card--out/g, '');
   				card.elem.className = cardClasses.replace('  ',' ').trim();
-					card.elem.classList.add(that._cards[that._cards.length-(index-i)].cardClass);
+          var newCardClass = that._cards[that._cards.length-(index-i)].cardClass;
+					card.elem.classList.add(newCardClass);
 
-					that.setZindex(card, that._cards.length - 1 - that._cards[that._cards.length-(index-i)].index);
+          var parsed = parseInt(newCardClass.slice(-1));
+
+          if(parsed > that.settings.showCards) {
+            card.elem.classList.add('cardslider__card--invisible');
+          }
+          else {
+            card.elem.classList.remove('cardslider__card--invisible');
+          }
+
+					that.setZindex(card, cardLen - that._cards[that._cards.length-(index-i)].index);
 				}
   		});
 		},
