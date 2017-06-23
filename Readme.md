@@ -95,6 +95,11 @@ Fires after the cards are changed. Takes the index of the next card as parameter
 
 ## methods
 
+## Get cardslider instance
+```javascript
+var cardslider = $('.my-cardslider').data('cardslider');
+```
+
 ### nextCard
 
 Slide to the next card

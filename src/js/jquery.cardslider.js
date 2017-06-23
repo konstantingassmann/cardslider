@@ -80,7 +80,7 @@
 
 			list.classList.add('cardslider__cards');
 
-      var rawcards = list.querySelectorAll('li');
+      var rawcards = list.children;
       for(var i = 0; i < rawcards.length; i++) {
         var rawcard = rawcards[i];
 
