@@ -160,8 +160,6 @@
             this._yDown = e.clientY || e.touches[0].clientY;
 		},
 		handleTouchEnd: function(e) {
-  		e.preventDefault();
-
       if ( ! this._xDown || ! this._yDown ) {
         return;
       }
