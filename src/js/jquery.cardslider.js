@@ -147,16 +147,19 @@
 			this.element.appendChild(this._dotnav);
 		},
 		initSwipe: function() {
+			// Handle Touch Events
       this.element.addEventListener('touchstart', this.handleTouchStart.bind(this), {passive:true});
 			this.element.addEventListener('touchmove', this.handleTouchEnd.bind(this), {passive:true});
+			
+			// Handle Mouse Events
+			 this.element.addEventListener('mousedown', this.handleTouchStart.bind(this), {passive:true});
+			this.element.addEventListener('mousemove', this.handleTouchEnd.bind(this), {passive:true});
 		},
 		handleTouchStart: function(e) {
-      this._xDown = e.touches[0].clientX;
-      this._yDown = e.touches[0].clientY;
+     this._xDown = e.clientX || e.touches[0].clientX;
+            this._yDown = e.clientY || e.touches[0].clientY;
 		},
 		handleTouchEnd: function(e) {
-  		e.preventDefault();
-
       if ( ! this._xDown || ! this._yDown ) {
         return;
       }
@@ -164,8 +167,8 @@
       var next = false;
       var prev = false;
 
-      var xUp = e.touches[0].clientX;
-      var yUp = e.touches[0].clientY;
+      var xUp = e.clientX ||  e.touches[0].clientX;
+      var yUp =e.clientY || e.touches[0].clientY;
 
       var xDiff = this._xDown - xUp;
       var yDiff = this._yDown - yUp;
