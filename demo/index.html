@@ -19,17 +19,17 @@
             </div>
         </div>
        
-        <script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
-        <script src="../dist/js/jquery.cardslider.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="../dist/js/jquery.cardslider.min.js"></script>
         <script>
             $(function() {
                 $('.my-cardslider').cardslider({
                     swipe: true,
                     dots: true,
-                    loop: true
-                });
-
-                
+                    loop: true,
+                    threshold: 5,
+                    swipeOrientation: 'horizontal',
+                });                
             });
         </script>
     </body>

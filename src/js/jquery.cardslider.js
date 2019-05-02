@@ -15,7 +15,9 @@ jQuery(function($){
 			loop: false,
 			beforeCardChange: null,
 			afterCardChange: null,
-			showCards: 0
+			showCards: 0,
+			threshold: 100,
+			swipeOrientation: 'horizontal',
 		};
 
 	function Plugin(element, options) {
@@ -37,7 +39,7 @@ jQuery(function($){
 		this._buttonPrev = null;
 		this._xDown = null;
 		this._yDown = null;
-		this._swipeThreshold = 100;
+		this._swipeThreshold = this.settings.threshold;
 
 		this.init();
 	}
@@ -177,40 +179,34 @@ jQuery(function($){
 
 			if (Math.abs(xDiff) > Math.abs(yDiff)) {
 
+
 				if (Math.abs(xDiff) < this._swipeThreshold) {
 					return;
 				}
 
-				if (xDiff > 0) { // left swipe
-					if (this.settings.direction == 'left') {
-						next = true;
-					} else if (this.settings.direction == 'right') {
+				if(this.settings.swipeOrientation == 'horizontal'){
+
+					if(xDiff > 0){
 						prev = true;
 					}
-				} else { //right swipe
-					if (this.settings.direction == 'right') {
+					else{
 						next = true;
-					} else if (this.settings.direction == 'left') {
-						prev = true;
 					}
+
 				}
+
 			} else {
 
 				if (Math.abs(yDiff) < this._swipeThreshold) {
 					return;
 				}
 
-				if (yDiff > 0) { //up swipe
-					if (this.settings.direction == 'up') {
-						next = true;
-					} else if (this.settings.direction == 'down') {
+				if(this.settings.swipeOrientation == 'vertical'){
+
+					if (yDiff > 0) { //up swipe						
 						prev = true;
-					}
-				} else { //down swipe
-					if (this.settings.direction == 'down') {
+					} else { //down swipe
 						next = true;
-					} else if (this.settings.direction == 'up') {
-						prev = true;
 					}
 				}
 			}
