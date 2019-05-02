@@ -1,0 +1,196 @@
+.cardslider {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+
+
+    &__cards,
+    &__dots-nav {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    &__cards {
+        width: 80%;
+        height: 80%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        transform-style: preserve-3d;
+        
+        // border-radius: 10px;
+    }
+
+    &__dots-nav {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    &__dot {
+        display: inline-block;
+        margin-right: 8px;
+    }
+
+    &__dot-btn {
+        position: relative;
+        border-radius: 50%;
+        border: 2px solid #dadada;
+        width: 10px;
+        height: 10px;
+        display: block;
+        appearance: none;
+        background: none;
+        padding: 0;
+        outline: none;
+
+        &::before {
+            content: ' ';
+            position: absolute;
+            display: block;
+            background: white;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            left: 50%;
+            top: 50%;
+            transition: all .5s;
+            transform: translate(-50%, -50%) scale(0);
+        }
+    }
+
+    &__dot--active .cardslider__dot-btn::before {
+        transform: translate(-50%, -50%) scale(1.1);
+        background: #000;
+    }
+
+    &__card {
+        background: rgb(215, 215, 215);
+        display: block;
+        // border-radius: 10px;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        will-change: transform, opacity, background;
+        transition: background 0.5s ease-out, opacity 0.5s;
+        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+        // border: 1px solid #000;
+
+        &--transitions {
+            transition: background 0.5s ease-out, transform 0.5s ease-out, opacity 0.5s;
+        }
+
+        &--index-0 {
+            background: rgb(255, 255, 255);
+        }
+
+        &--index-1 {
+            background: rgb(245, 245, 245);
+        }
+
+        &--index-2 {
+            background: rgb(235, 235, 235);
+        }
+
+        &--index-3 {
+            background: rgb(225, 225, 225);
+        }
+
+        &--invisible {
+            opacity: 0;
+        }
+    }
+
+    &--direction-up {
+        @include direction(y, true);
+    }
+
+    &--sortback-up {
+        animation: sortback-up 0.67s;
+    }
+
+    &--sortfront-up {
+        animation: sortfront-up 0.67s;
+    }
+
+    &--direction-down {
+        @include direction(y, false);
+    }
+
+    &--sortback-down {
+        animation: sortback-down 0.67s;
+    }
+
+    &--sortfront-down {
+        animation: sortfront-down 0.67s;
+    }
+
+    &--direction-right {
+        @include direction(x, false);
+    }
+
+    &--sortback-right {
+        animation: sortback-right 0.67s;
+    }
+
+    &--sortfront-right {
+        animation: sortfront-right 0.67s;
+    }
+
+    &--direction-left {
+        @include direction(x, true);
+    }
+
+    &--sortback-left {
+        animation: sortback-left 0.67s;
+    }
+
+    &--sortfront-left {
+        animation: sortfront-left 0.67s;
+    }
+
+    &__direction-nav {
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+    }
+
+    &__nav-next,
+    &__nav-prev {
+        display: block;
+        background: none;
+        border: none;
+        width: 40px;
+        height: 40px;
+        text-indent: -9999px;
+        outline: none;
+        transition: all .3s;
+        border: 2px solid white;
+        border-radius: 50%;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 20px 20px;
+        padding: 0;
+
+        &:active {
+            transform: scale(.8);
+        }
+    }
+
+    &__nav-next {
+        margin-bottom: 10px;
+        background-image: url('../img/arrow-up.svg');
+    }
+
+    &__nav-prev {
+        background-image: url('../img/arrow-down.svg');
+    }
+}
+
+
+
+@include anim();

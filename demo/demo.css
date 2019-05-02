@@ -1,0 +1,178 @@
+* {
+	box-sizing: border-box;
+}
+
+html, body {
+	height: 100vh;
+	font-size: 10px;
+}
+
+@media (max-width: 600px) {
+	html,
+	body {
+		font-size: 6px;
+	}
+}
+
+body {
+	font-family: 'Roboto Mono', monospace;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#2276d6+0,ed2d50+100 */
+	background: rgb(34,118,214); /* Old browsers */
+	background: -moz-linear-gradient(45deg, #2276d6, #ed2d50);
+	background: -webkit-linear-gradient(45deg, #2276d6, #ed2d50);
+	background: linear-gradient(45deg, #2276d6, #ed2d50);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2276d6', endColorstr='#ed2d50',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+	text-rendering: optimizeLegibility;
+}
+
+a {
+	color: rgb(34,118,214);
+}
+
+.cardslider__cards {
+	width: 50%;
+	height: 50%;
+}
+
+@media (max-width: 600px) {
+	.cardslider__cards {
+		width: 80%;
+	}
+}
+
+.main {
+	width: 100%;
+	height: 100%;
+}
+
+.cardslider__card {
+	padding: 20px;
+	color: black;
+	font-size: 4rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.cardslider__card.center {
+	text-align: center;
+}
+
+.no-center {
+	display: block;
+}
+
+table {
+	margin-bottom: 10px;
+}
+
+code {
+	font-size: 1.8rem;
+	line-height: 1.4;
+}
+
+.methods {
+	overflow-y: scroll;
+	display: block;
+	height: 100%;
+	font-size: 1.4rem;
+}
+
+.methods code {
+	font-size: 1.4rem;
+}
+
+table {
+	width: 100%;
+}
+
+table td {
+	padding: 10px;
+}
+
+@media (max-width: 960px) {
+	table td {
+		display: block;
+	}
+}
+
+table tr.title td {
+	font-size: 2rem;
+	padding-top: 20px;
+	border-bottom: 1px solid black;
+}
+
+table tr td.center {
+	text-align: center;
+}
+
+@media (max-width: 960px) {
+	table tr td.center {
+		text-align: left;
+	}
+}
+
+table tr:nth-child(even) td {
+	background: rgba(34, 118, 214, .2);
+}
+
+header {
+	width: 100%;
+	position: absolute;
+	padding: 40px 40px 0;
+	color: white;
+	display: flex;
+	font-size: 1.6rem;
+	z-index: 10;
+}
+
+header h1 {
+	font-size: 1.6rem;
+	line-height: 1;
+}
+
+header .left,
+header .right {
+	flex-grow: 1;
+	flex-basis: 50%;
+	align-items: center;
+	display: flex;
+}
+
+header .right {
+	justify-content: flex-end;
+}
+
+@media (max-width: 600px) {
+	header .right img {
+		width: 30px;
+	}
+}
+
+@media (max-width: 600px) {
+	header {
+		text-align: center;
+		font-size: 2.6666666667rem;
+		flex-direction: column;
+		padding-bottom: 40px;
+	}
+
+	.mobile-smaller {
+		font-size: 1.4rem;
+	}
+}
+
+.logo {
+	margin-right: 8px;
+}
+
+.cardtitle {
+	font-size: 1.4rem;
+	position: absolute;
+	bottom: 20px;
+	width: 100%;
+	left: 0;
+	text-align: center;
+	display: block;
+}
