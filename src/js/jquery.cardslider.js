@@ -18,6 +18,7 @@ jQuery(function($){
 			showCards: 0,
 			threshold: 100,
 			swipeOrientation: 'horizontal',
+			reverseSwipe: false,
 		};
 
 	function Plugin(element, options) {
@@ -186,7 +187,16 @@ jQuery(function($){
 
 				if(this.settings.swipeOrientation == 'horizontal'){
 
-					if(xDiff > 0){
+					let xIsPrevDirection;
+
+					if( this.settings.reverseSwipe ){
+						xIsPrevDirection = xDiff < 0;
+					}
+					else{
+						xIsPrevDirection = xDiff > 0;
+					}
+
+					if( xIsPrevDirection ){
 						prev = true;
 					}
 					else{
@@ -203,7 +213,16 @@ jQuery(function($){
 
 				if(this.settings.swipeOrientation == 'vertical'){
 
-					if (yDiff > 0) { //up swipe						
+					let yIsPrevDirection;
+
+					if( this.settings.reverseSwipe ){
+						yIsPrevDirection = yDiff < 0;
+					}
+					else{
+						yIsPrevDirection = yDiff > 0;
+					}
+
+					if ( yIsPrevDirection ) { //up swipe						
 						prev = true;
 					} else { //down swipe
 						next = true;
