@@ -1,0 +1,134 @@
+@mixin direction($direction: y, $positiv: true) {
+    $positions: (-1: 17.25%, 0: 0, 1: 4.31%, 2: 8.61%, 3: 12.91%, 4: 150%);
+    $x: 0;
+    $y: 0;
+    $scale: 1;
+
+    @each $i,
+    $val in $positions {
+        @if $direction==x {
+            $x: $val;
+        }
+
+        @else {
+            $y: $val;
+        }
+
+        @if $positiv==false and $i !=4 {
+            $x: $x * -1;
+            $y: $y * -1;
+        }
+
+        @if $i>0 {
+            $scale: $scale - 0.05;
+        }
+
+        @if $i==-1 {
+            .cardslider__card {
+                transform: scale(#{$scale - 0.2}) translate3d(#{$x}, #{$y}, 0);
+            }
+        }
+
+        @else if $i==4 {
+            .cardslider__card--out {
+                transform: translate3d(#{$x}, #{$y}, 4px);
+            }
+        }
+
+        @else {
+            $scaleRule: '';
+
+            @if $i !=0 {
+                $scaleRule: scale(#{$scale});
+            }
+
+            .cardslider__card--index-#{$i} {
+                transform: #{$scaleRule} translate3d(#{$x}, #{$y}, #{4-$i}px);
+            }
+        }
+    }
+}
+
+@mixin anim() {
+
+    $val: 150%;
+    $directions: ('down', 'up', 'left', 'right');
+    $steps: (0, 50, 60, 100);
+
+    @each $dir in $directions {
+        $x: 0;
+        $y: 0;
+
+        @if $dir=='down'or $dir=='up' {
+            $y: $val;
+        }
+
+        @else {
+            $x: $val;
+        }
+
+        @if $dir=='up'or $dir=='left' {
+            $x: $x * -1;
+            $y: $y * -1;
+        }
+
+        @keyframes sortback-#{$dir} {
+            @each $step in $steps {
+                $z: 0;
+                $scale: 0;
+
+                @if $step>50 {
+                    $z: 0;
+                    $scale: 0.8;
+                }
+
+                @else {
+                    $z: 4px;
+                    $scale: 1;
+                }
+
+                $xval: 0;
+                $yval: 0;
+
+                @if $step>0 and $step < 100 {
+                    $xval: $x;
+                    $yval: $y;
+                }
+
+                #{$step}% {
+                    transform: translate3d($xval, $yval, $z) scale($scale);
+                }
+            }
+        }
+
+        @keyframes sortfront-#{$dir} {
+
+            @each $step in $steps {
+                $z: 0;
+                $scale: 0;
+
+                @if $step < 60 {
+                    $z: 0;
+                    $scale: 0.8;
+                }
+
+                @else {
+                    $z: 4px;
+                    $scale: 1;
+                }
+
+                $xval: 0;
+                $yval: 0;
+
+                @if $step>0 and $step < 100 {
+                    $xval: $x;
+                    $yval: $y;
+                }
+
+                #{$step}% {
+                    transform: translate3d($xval, $yval, $z) scale($scale);
+                }
+            }
+        }
+    }
+}

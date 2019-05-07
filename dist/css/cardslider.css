@@ -26,36 +26,38 @@
   .cardslider__dot-btn {
     position: relative;
     border-radius: 50%;
-    border: 2px solid white;
+    border: 2px solid #dadada;
     width: 10px;
     height: 10px;
     display: block;
     appearance: none;
     background: none;
-    padding: 0; }
+    padding: 0;
+    outline: none; }
     .cardslider__dot-btn::before {
       content: ' ';
       position: absolute;
       display: block;
       background: white;
-      width: 6px;
-      height: 6px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
       left: 50%;
       top: 50%;
       transition: all .5s;
       transform: translate(-50%, -50%) scale(0); }
   .cardslider__dot--active .cardslider__dot-btn::before {
-    transform: translate(-50%, -50%) scale(1.1); }
+    transform: translate(-50%, -50%) scale(1.1);
+    background: #000; }
   .cardslider__card {
     background: #d7d7d7;
     display: block;
-    border-radius: 10px;
     width: 100%;
     height: 100%;
     position: absolute;
     will-change: transform, opacity, background;
-    transition: background 0.5s ease-out, opacity 0.5s; }
+    transition: background 0.5s ease-out, opacity 0.5s;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14); }
     .cardslider__card--transitions {
       transition: background 0.5s ease-out, transform 0.5s ease-out, opacity 0.5s; }
     .cardslider__card--index-0 {
@@ -168,7 +170,6 @@
     transform: translate3d(0, 150%, 0) scale(0.8); }
   100% {
     transform: translate3d(0, 0, 0) scale(0.8); } }
-
 @keyframes sortfront-down {
   0% {
     transform: translate3d(0, 0, 0) scale(0.8); }
@@ -178,7 +179,6 @@
     transform: translate3d(0, 150%, 4px) scale(1); }
   100% {
     transform: translate3d(0, 0, 4px) scale(1); } }
-
 @keyframes sortback-up {
   0% {
     transform: translate3d(0, 0, 4px) scale(1); }
@@ -188,7 +188,6 @@
     transform: translate3d(0, -150%, 0) scale(0.8); }
   100% {
     transform: translate3d(0, 0, 0) scale(0.8); } }
-
 @keyframes sortfront-up {
   0% {
     transform: translate3d(0, 0, 0) scale(0.8); }
@@ -198,7 +197,6 @@
     transform: translate3d(0, -150%, 4px) scale(1); }
   100% {
     transform: translate3d(0, 0, 4px) scale(1); } }
-
 @keyframes sortback-left {
   0% {
     transform: translate3d(0, 0, 4px) scale(1); }
@@ -208,7 +206,6 @@
     transform: translate3d(-150%, 0, 0) scale(0.8); }
   100% {
     transform: translate3d(0, 0, 0) scale(0.8); } }
-
 @keyframes sortfront-left {
   0% {
     transform: translate3d(0, 0, 0) scale(0.8); }
@@ -218,7 +215,6 @@
     transform: translate3d(-150%, 0, 4px) scale(1); }
   100% {
     transform: translate3d(0, 0, 4px) scale(1); } }
-
 @keyframes sortback-right {
   0% {
     transform: translate3d(0, 0, 4px) scale(1); }
@@ -228,7 +224,6 @@
     transform: translate3d(150%, 0, 0) scale(0.8); }
   100% {
     transform: translate3d(0, 0, 0) scale(0.8); } }
-
 @keyframes sortfront-right {
   0% {
     transform: translate3d(0, 0, 0) scale(0.8); }
@@ -238,3 +233,5 @@
     transform: translate3d(150%, 0, 4px) scale(1); }
   100% {
     transform: translate3d(0, 0, 4px) scale(1); } }
+
+/*# sourceMappingURL=cardslider.css.map */
